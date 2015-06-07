@@ -20,8 +20,8 @@ function handler (req, res) {
 io.on('connection', function (socket) {
     console.log('[Connection Established]');
 
-    socket.on('heartbeat', function (data) {
-        console.log(data);
-        socket.emit('heartbeat', 'pong');
+    socket.on('MOVE', function (direction) {
+        console.log( { 'MOVE' : direction } );
+        io.emit('MOVE', direction);
     });
 });
