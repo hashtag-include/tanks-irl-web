@@ -1,0 +1,11 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io('http://azure-node-ws.azurewebsites.net');
+    socket.on('connect', function() {
+        console.log('[Connection Established]');
+    });
+    socket.on('heartbeat', function (data) {
+        console.log(data);
+    });
+    socket.emit('heartbeat', 'ping');
+</script>
