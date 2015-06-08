@@ -177,7 +177,7 @@
                     self.timeout = setInterval(function() {
                         console.log( { 'MOVE' : direction } );
                         self.socket.emit('MOVE', direction);
-                    }, 500);
+                    }, 200);
 
                     return false;
                 });
