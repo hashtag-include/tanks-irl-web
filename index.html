@@ -154,12 +154,13 @@
         </div>
         
         <!-- Scripts Start -->
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
             var Controller = function(el, socket) {
                 this.$el = $(el);
                 this.$dpad = this.$el.find('.dpad');
+                this.$start = this.$el.find('.button.start');
                 this.socket = socket;
                 this.timeout;
                 var self = this;
@@ -180,6 +181,10 @@
 
                     return false;
                 });
+                this.$start.click(function() {
+                    console.log( { 'EXIT' : true } );
+                    self.socket.emit('EXIT', true);
+                });
                 $(document).mouseup(function() {
                     if(typeof(self.timeout) !== 'undefined') clearInterval(self.timeout);
                     return false;
@@ -187,7 +192,7 @@
             }
             
             $(document).ready(function() {
-//                var socket = io('http://localhost:1337');
+               // var socket = io('http://localhost:1337');
                 var socket = io('https://tanks-irl.azurewebsites.net');
                 socket.on('connect', function() {
                     console.log('[Connection Established]');

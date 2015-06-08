@@ -24,4 +24,8 @@ io.on('connection', function (socket) {
         console.log( { 'MOVE' : direction } );
         io.emit('MOVE', direction);
     });
+    socket.on('EXIT', function (direction) {
+        console.log( { 'EXIT' : true } );
+        io.emit('EXIT', true);
+    });
 });
