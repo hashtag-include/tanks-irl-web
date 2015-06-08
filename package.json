@@ -1,6 +1,6 @@
 {
-  "name": "websockets",
-  "version": "0.0.0",
+  "name": "tanks-irl-web",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fs": "0.0.2",
+    "express": "^4.12.4",
     "http": "0.0.0",
     "socket.io": "^1.3.5"
   },
