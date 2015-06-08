@@ -33,8 +33,7 @@ var Controller = function(el, socket) {
 }
 
 $(document).ready(function() {
-   // var socket = io('http://localhost:1337');
-    var socket = io('https://tanks-irl.azurewebsites.net');
+    var socket = io(document.location.origin);
     socket.on('connect', function() {
         console.log('[Connection Established]');
     });
