@@ -14,11 +14,12 @@ var Controller = function(el, socket) {
         var direction = Math.abs(dX) > Math.abs(dY) ? 
                             (dX < 0 ? 'LEFT' : 'RIGHT')
                             : (dY < 0 ? 'UP' : 'DOWN');
-
+	
+	self.socket.emit('MOVE', direction);
         self.timeout = setInterval(function() {
             console.log( { 'MOVE' : direction } );
             self.socket.emit('MOVE', direction);
-        }, 200);
+        }, 100);
 
         return false;
     });
