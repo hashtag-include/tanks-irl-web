@@ -12,15 +12,34 @@
     </head>
     <body>
         <div class="controller">
-            <div class="dpad"></div>
-            <div class="button select"></div>
-            <div class="button start"></div>
-            <div class="button left"></div>
-            <div class="button right"></div>
+            <div class="section-left">
+                <div class="dpad">
+                    <button class="up"></button>
+                    <button class="left"></button>
+                    <button class="right"></button>
+                    <button class="down"></button>
+                </div>
+            </div>
+            <div class="section-middle">
+                <div class="fuel">
+                    <div class="bar"></div>
+                </div>
+                <div class="health">
+                    <div class="bar"></div>
+                </div>
+                <button class="select"></button>
+                <button class="start"></button>
+            </div>
+            <div class="section-right">
+                <button class="primary"></button>
+                <button class="secondary"></button>
+            </div>
         </div>
-        
+
         <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/scripts/main.js"></script>
+        <script src="/scripts/game.js"></script>
+        <script src="/scripts/player.js"></script>
+        <script src="/scripts/controller.js"></script>
     </body>
 </html>

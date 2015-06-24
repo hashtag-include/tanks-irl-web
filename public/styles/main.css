@@ -1,137 +1,254 @@
+@font-face {
+    font-family: Ailerons;
+    src: url(/fonts/Ailerons.ttf);
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
-    background: rgba(133,146,153,1);
+    background: #939393;
 }
 
-h1 {
-    text-align: center;
-    color: rgba(224,224,225,1);
-    font-weight: 300;
-}
 
+/*------------------------------------*/
+/*          Controller START          */
+/*------------------------------------*/
 .controller {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 26.25em;
-    height: 11.25em;
-    background: rgba(91,108,123,1);
+    width: 475px;
+    height: 210px;
+    background: #FFDF02;
     background-size: cover;
-    border-top-width: 2em;
-    border-radius: 0.2em;
+    border-top-width: 20px;
     box-shadow:
-        inset 0 0 0 0.5em rgba(224,224,225,1),
-        inset 0 1.5em 0 rgba(224,224,225,1);
+        inset 0 0 0 15px #3E4249,
+        inset 0 34px 0 #3E4249;
     transform: translate(-50%,-50%);
 }
 
-.dpad, .dpad:before, .dpad:after {
-    content: '';
+/*---------- Left Section ----------*/
+.controller .section-left {
+    width: 130px;
+    height: 100%;
+    position: relative;
+    margin-left: 15px;
+    display: inline-block;
+}
+.controller .section-left .dpad {
+    width: 90px;
+    height: 90px;
     position: absolute;
-    top: 5.75em;
-    left: 2em;
-    display: block;
-    width: 4.75em;
-    height: 1.75em;
-    background: rgba(56,61,66,1);
-    border-radius: 0.15em;
-    box-shadow: 0 0 0 0.25em rgba(178,178,179,1);
-}
-.dpad:before {
-    top: -1.5em;
-    left: 1.5em;
-    width: 1.75em;
-    height: 4.75em;
-    box-shadow: 0 0 0 0.25em rgba(178,178,179,1);
-}
-.dpad:after {
-    top: 0;
+    top: 80px;
     left: 0;
-    box-shadow: inset 2.375em 0 rgba(0,0,0,0);
+    right: 0;
+    margin: auto;
 }
-
-.button.select, .button.start {
-    position: absolute;
-    top: 6.75em;
-    left: 8.65em;
-    width: 3.5em;
-    height: 2.5em;
-    background: rgba(224,224,225,1);
-    border-radius: 0.25em 0 0 0.25em;
-}
-
-.button.start {
-    left: 12.15em;
-    background: rgba(224,224,225,1);
-    border-radius: 0 0.25em 0.25em 0;
-}
-
-.button.select:before, .button.start:before {
+.controller .section-left .dpad:before, .controller .section-left .dpad:after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
     display: block;
-    width: 2.25em;
-    height: 0.75em;
-    margin-left: 0.15em;
-    background: rgba(56,61,66,0.75);
-    border-radius: 0.5em;
-    transform: translate(-50%,-50%);
+    background: #3E4249;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
 }
-.button.start:before { margin-left: -0.15em; }
-
-.button.select:after, .button.start:after {
-    content: '';
-    position: absolute;
-    top: -1.75em;
-    display: block;
+.controller .section-left .dpad:before {
+    height: 100%;
+    width: 30px;
+    margin: auto;
+}
+.controller .section-left .dpad:after {
+    height: 30px;
     width: 100%;
-    height: 1.25em;
-    color: rgba(154,167,175,1);
-    background: rgba(154,167,175,1);
-    border-radius: 0.25em 0 0 0.25em;
-    box-shadow:
-        -0.5em 5.25em 0 -0.5em rgba(224,224,225,1),
-        0.5em 5.25em 0 -0.5em rgba(224,224,225,1),
-        0 4.75em,
-        0 -1.75em,
-        0 -3.5em,
-        -0.25em -3.75em 0 -0.25em;
+    margin: auto;
 }
-.button.start:after {
-    color: rgba(154,167,175,1);
-    background: rgba(154,167,175,1);
-    border-radius: 0 0.25em 0.25em 0;
-    box-shadow:
-        -0.5em 5.25em 0 -0.5em rgba(224,224,225,1),
-        0.5em 5.25em 0 -0.5em rgba(224,224,225,1),
-        0 4.75em,
-        0 -1.75em,
-        0 -3.5em,
-        0.25em -3.75em 0 -0.25em;
-}
-
-.button.left, .button.right {
+.controller .section-left .dpad .up, .controller .section-left .dpad .down,
+.controller .section-left .dpad .left, .controller .section-left .dpad .right {
+    background: #3E4249;
+    border-width: 0;
+    outline: none;
     position: absolute;
-    top: 6.5em;
-    right: 6em;
-    width: 3em;
-    height: 3em;
-    background: rgba(224,224,225,1);
-    border-radius: 0.25em;
+    padding: 0;
 }
-
-.button.right {
-    right: 2.5em;
+.controller .section-left .dpad .up, .controller .section-left .dpad .down {
+    width: 30px;
+    height: 30px;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
+.controller .section-left .dpad .left, .controller .section-left .dpad .right {
+    width: 30px;
+    height: 30px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.controller .section-left .dpad .up { top: 0; }
+.controller .section-left .dpad .down { bottom: 0; }
+.controller .section-left .dpad .left { left: 0; }
+.controller .section-left .dpad .right { right: 0; }
 
-.button.left:before, .button.right:before {
+/*---------- Middle Section ----------*/
+.controller .section-middle {
+    width: 140px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+}
+.controller .section-middle:before, .controller .section-middle:after {
     content: '';
     display: block;
-    width: 2.25em;
-    height: 2.25em;
-    margin: 0.375em;
-    background: rgba(214,73,128,1);
-    border-radius: 50%;
+    height: 20px;
+    width: 100%;
+    background: #3E4249;
+    position: absolute;
 }
+.controller .section-middle:before {
+    top: 34px;
+}
+.controller .section-middle:after {
+    bottom: 14px;
+}
+.controller .section-middle .fuel, .controller .section-middle .health {
+    height: 4px;
+    width: 120px;
+    position: relative;
+    border-radius: 4px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 1px solid #FFDF02;
+}
+.controller .section-middle .fuel {
+    top: 75px;
+}
+.controller .section-middle .health {
+    top: 100px;
+}
+.controller .section-middle .fuel:before, .controller .section-middle .health:before {
+    display: block;
+    color: #FFDF02;
+    font-size: 10px;
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    text-align: center;
+}
+.controller .section-middle .fuel:before {
+    content: 'FUEL';
+}
+.controller .section-middle .health:before {
+    content: 'HEALTH';
+}
+.controller .section-middle .fuel:after, .controller .section-middle .health:after {
+    content: '';
+    display: block;
+    background: #3E4249;
+    width: 140px;
+    height: 22px;
+    margin-left: -10px;
+    margin-top: -14px;
+    z-index: -2;
+    position: absolute;
+}
+.controller .section-middle .fuel .bar, .controller .section-middle .health .bar {
+    height: 6px;
+    width: 0%;
+    min-width: 0%;
+    max-width: 100%;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: -1px;
+    background: #FFDF02;
+    -webkit-transition: width 1s ease-in-out;
+    -moz-transition: width 1s ease-in-out;
+    -o-transition: width 1s ease-in-out;
+    transition: width 1s ease-in-out;
+}
+.controller .section-middle .select, .controller .section-middle .start {
+    height: 12px;
+    width: 38px;
+    background: #FFDF02;
+    display: inline-block;
+    outline: none;
+    position: absolute;
+    bottom: 57px;
+    border: none;
+}
+.controller .section-middle .select {
+    left: 20px;
+}
+.controller .section-middle .start {
+    right: 20px;
+}
+.controller .section-middle .select:before, .controller .section-middle .start:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 78px;
+    height: 40px;
+    background: #3E4249;
+    border: none;
+    z-index: -1;
+    margin: -20px 0 0 -26px;
+}
+
+/*---------- Right Section ----------*/
+.controller .section-right {
+    width: 165px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+}
+.controller .section-right .primary, .controller .section-right .secondary {
+    position: absolute;
+    bottom: 44px;
+    width: 40px;
+    height: 40px;
+    background: #FFDF02;
+    border-radius: 50%;
+    outline: none;
+    padding: 0;
+    border: none;
+}
+.controller .section-right .primary {
+    right: 35px;
+}
+.controller .section-right .secondary {
+    right: 100px;
+}
+.controller .section-right .primary:before, .controller .section-right .secondary:before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: #3E4249;
+    height: 54px;
+    width: 54px;
+    top: -2px;
+    left: -2px;
+    margin: -5px;
+    z-index: -1;
+}
+.controller .section-right .primary:after, .controller .section-right .secondary:after {
+    color: #3E4249;
+    display: block;
+    position: absolute;
+    bottom: -22px;
+    right: -5px;
+    margin: -2px;
+    z-index: -1;
+}
+.controller .section-right .primary:after {
+    content: 'A';
+}
+.controller .section-right .secondary:after {
+    content: 'B';
+}
+/*------------------------------------*/
+/*           Controller END           */
+/*------------------------------------*/
