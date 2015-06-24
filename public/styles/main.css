@@ -3,6 +3,11 @@
     src: url(/fonts/Ailerons.ttf);
 }
 
+html, body {
+    max-height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     background: #939393;
