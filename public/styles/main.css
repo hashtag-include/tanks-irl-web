@@ -3,6 +3,12 @@
     src: url(/fonts/Ailerons.ttf);
 }
 
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     background: #939393;
