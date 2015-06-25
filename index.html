@@ -7,6 +7,10 @@
         <meta name="author" content="hashtag-include">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
         <!-- iOS Specific -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,13 +27,40 @@
     </head>
     <body>
         <div class="container">
+            <!-- Setup Start -->
+            <div class="setup">
+                <div class="section-start">
+                    <button class="join">Join Game</button>
+                    <button class="host">Host Game</button>
+                </div>
+                <div class="section-join">
+                    <table class="game-list">
+                        <thead>
+                            <tr>
+                                <td class="hostname">Host Name</td>
+                                <td class="connect">Join Match</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="refresh">Refresh</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="section-host"></div>
+            </div>
+            <!-- Setup End -->
+            
+            <!-- Controller Start -->
             <div class="controller">
                 <div class="section-left">
                     <div class="dpad">
-                        <button class="up"></button>
-                        <button class="left"></button>
-                        <button class="right"></button>
-                        <button class="down"></button>
+                        <button class="up" />
+                        <button class="left" />
+                        <button class="right" />
+                        <button class="down" />
                     </div>
                 </div>
                 <div class="section-middle">
@@ -39,14 +70,15 @@
                     <div class="health">
                         <div class="bar"></div>
                     </div>
-                    <button class="select"></button>
-                    <button class="start"></button>
+                    <button class="select" />
+                    <button class="start" />
                 </div>
                 <div class="section-right">
-                    <button class="primary"></button>
-                    <button class="secondary"></button>
+                    <button class="primary" />
+                    <button class="secondary" />
                 </div>
             </div>
+            <!-- Player End -->
         </div>
         <div id="orientation-warning">
             This application is only viewable in landscape mode
@@ -54,8 +86,9 @@
 
         <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/scripts/game.js"></script>
-        <script src="/scripts/player.js"></script>
         <script src="/scripts/controller.js"></script>
+        <script src="/scripts/player.js"></script>
+        <script src="/scripts/game.js"></script>
+        <script src="/scripts/setup.js"></script>
     </body>
 </html>
