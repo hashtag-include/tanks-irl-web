@@ -110,7 +110,7 @@ body {
 .setup .section-join .game-list thead {
     font-size: 16px;
 }
-.setup .section-join .game-list .hostname {
+.setup .section-join .game-list .hostId {
     margin-left: 20px;
 }
 .setup .section-join .game-list .connect {

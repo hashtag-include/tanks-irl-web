@@ -1,19 +1,24 @@
-function Game(player) {
+function Game(player, opponent) {
     this.player = player;
+    this.opponent = opponent;
     this.socket = io(document.location.origin);
 };
 
 Game.prototype = {
     player: null,
+    opponent: null,
     socket: null,
     MODE_TYPE: ['MOVE', 'AIM'],
     mode: null,
 
     constructor: Game,
     init: function() {
+        this.player.init();
+        this.opponent.init();
+
         this.player.setFuel(100);
         this.player.setHealth(100);
-        
+
         this.setMode(Game.prototype.MODE_TYPE.MOVE);
         
         this.bindEvents();

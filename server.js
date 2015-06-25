@@ -41,31 +41,35 @@ app.get('/game', function (req, res) {
 app.post('/game', function (req, res) {
     var response = { message: null, gameList: gameList };
     
-    // Find the requested host, ensure there is no opponent and the requested opponent is in the list of unmatched 
-    for(var i = 0; i < gameList.sessions.length; i++) {
-        if(gameList.sessions[i].host.id == req.body.host) {
-            if(gameList.sessions[i].opponent == null) {
-                if(gameList.unmatched.indexOf(req.body.opponent) !== -1) {
-                    gameList.sessions[i].opponent = { id: req.body.opponent, fuel: 100, health: 100 };
-                    gameList.unmatched.splice(gameList.unmatched.indexOf(req.body.opponent), 1);
-
-                    response.message = "OK";
-                    response.gameList = gameList;
-                    res.status(200).send(response);
-                    return;
+    if(req.body.action == 'JOIN') {
+        // Find the requested host, ensure there is no opponent and the requested opponent is in the list of unmatched 
+        for(var i = 0; i < gameList.sessions.length; i++) {
+            if(gameList.sessions[i].host.id == req.body.hostId) {
+                if(gameList.sessions[i].opponent == null) {
+                    if(gameList.unmatched.indexOf(req.body.playerId) !== -1) {
+                        gameList.sessions[i].opponent = { id: req.body.playerId, fuel: 100, health: 100 };
+                        gameList.unmatched.splice(gameList.unmatched.indexOf(req.body.playerId), 1);
+    
+                        response.message = 'OK';
+                        response.gameList = gameList;
+                        res.status(200).send(response);
+                        return;
+                    } else {
+                        response.message = 'Error: Tank not connected or already connected to another session';
+                        res.status(409).send(response);
+                        return;
+                    }
+                    
+                    gameList.sessions[i].opponent = { id: req.body.playerId};
                 } else {
-                    response.message = 'Error: Tank not connected';
+                    response.message = 'Error: Requested session has been filled';
                     res.status(409).send(response);
                     return;
                 }
-                
-                gameList.sessions[i].opponent = { id: req.body.opponent};
-            } else {
-                response.message = 'Error: Requested session has been filled';
-                res.status(409).send(response);
-                return;
             }
         }
+    } else if(req.body.action == 'HOST') {
+        
     }
     
     response.message = 'Error: Host has disconnected';

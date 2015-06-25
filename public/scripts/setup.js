@@ -2,6 +2,7 @@
     var Setup = {
         $el: null,
         gameList: null,
+        game: null,
 
         init: function() {
             this.$el = $('.setup');
@@ -24,19 +25,35 @@
                 this.setGameList(gameList);
             }.bind(this));
         },
-        joinGame: function(hostname) {
+        requestToJoinGame: function(hostId, playerId) {
             $.ajax({
                 url: '/game',
                 method: 'POST',
                 dataType: 'json',
-                data: { host: hostname, opponent: 'TODO' } //TODO
+                data: { action: 'JOIN', hostId: hostId, playerId: playerId }
             }).done(function(response) {
-                console.log(response);
+                this.setGameList(response.gameList);
+                this.initializeGame(playerId, hostId);
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
                 alert(response.message);
             }.bind(this));
+        },
+        initializeGame: function(playerId, opponentId) {
+            var controller = new Controller();
+            var player = new Player(playerId, controller);
+            var opponent = new Player(opponentId, null);
+            this.game = new Game(player, opponent);
+            
+            this.hide();
+            this.game.init();
+        },
+        show: function() {
+            this.$el.show();
+        },
+        hide: function() {
+            this.$el.hide();
         },
 
         // Getters and Setters
@@ -51,7 +68,7 @@
             for(var i = 0; i < gameList.sessions.length; i++) {
                 if(gameList.sessions[i].opponent == null) {
                     this.$el.find('.section-join .game-list tbody').append(
-                        '<tr><td class=\'hostname\'>' + 
+                        '<tr><td class=\'hostId\'>' + 
                         gameList.sessions[i].host.id + 
                         '</td><td class=\'connect\'>Connect</td></tr>'
                     );
@@ -71,8 +88,8 @@
             this.$el.find('.section-host').fadeIn();
         },
         onConnect: function(e) {
-            var hostname = $(e.target).parent().find('.hostname').text();
-            this.joinGame(hostname);
+            var hostId = $(e.target).parent().find('.hostId').text();
+            this.requestToJoinGame(hostId, 'SSOE');
         },
         onRefresh: function() {
             this.refreshGameList();

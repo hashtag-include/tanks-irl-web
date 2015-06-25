@@ -17,6 +17,8 @@ Controller.prototype = {
 
     constructor: Controller,
     init: function() {
+        this.show();
+
         this.EVENT_DPAD_UP.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.UP, true, true);
         this.EVENT_DPAD_RIGHT.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.RIGHT, true, true);
         this.EVENT_DPAD_DOWN.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.DOWN, true, true);

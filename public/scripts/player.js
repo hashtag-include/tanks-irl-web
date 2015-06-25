@@ -11,11 +11,11 @@ Player.prototype = {
 
     constructor: Player,
     init: function() {
+        if(this.controller) this.controller.init();
+
         this.bindEvents();
     },
-    bindEvents: function() {
-        // TODO
-    },
+    bindEvents: function() {},
     serialize: function() {
         var serialized = {};
         serialized.id = this.getId();
@@ -38,7 +38,7 @@ Player.prototype = {
     setFuel: function(fuel) {
         if(fuel < 0 || fuel > 100) throw "Error: Fuel out of bounds (must be 0-100)";
         
-        this.controller.setFuelBarWidth(fuel);
+        if(this.controller) this.controller.setFuelBarWidth(fuel);
         return this.fuel = fuel;
     },
     getHealth: function() {
@@ -47,7 +47,7 @@ Player.prototype = {
     setHealth: function(health) {
         if(health < 0 || health > 100) throw "Error: Health out of bounds (must be 0-100)";
 
-        this.controller.setHealthBarWidth(health);
+        if(this.controller) this.controller.setHealthBarWidth(health);
         return this.health = health;
     },
 };
