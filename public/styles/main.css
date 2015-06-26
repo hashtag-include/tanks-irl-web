@@ -160,6 +160,8 @@ body {
     text-align: center;
     border: none;
     vertical-align: bottom;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 .setup .section-id-input .start-game {
     background: #FFDF02;
