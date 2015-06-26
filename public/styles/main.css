@@ -153,17 +153,15 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
-    /*text-transform: uppercase;*/
+    text-transform: uppercase;
     width: 200px;
     font-size: 16px;
     outline: none;
-    /*text-align: center;*/
+    text-align: center;
     border: none;
-    /*vertical-align: bottom;*/
+    vertical-align: bottom;
     -webkit-appearance: none;
     border-radius: 0;
-    
-    z-index: 0;
 }
 .setup .section-id-input .start-game {
     background: #FFDF02;
