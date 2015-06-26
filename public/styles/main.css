@@ -3,11 +3,21 @@
     src: url(/fonts/Ailerons.ttf);
 }
 
-* {
+/* this removes the stupid selecting while using the controller and holding buttons */
+*, *:before, *:after {
     -webkit-user-select: none;
+    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    user-select: none;
 }
+input, input:before, input:after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+} 
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -138,7 +148,7 @@ body {
 
 /*---------- Host Section ----------*/
 .setup .section-id-input {
-    display: none; /* TODO */
+    display: none;
     height: 40px;
     width: 100%;
     position: absolute;
