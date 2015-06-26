@@ -79,12 +79,8 @@ app.post('/game', function (req, res) {
 io.on('connection', function (socket) {
     console.log('[Connection Established]');
 
-    socket.on('MOVE', function (direction) {
-        console.log( { 'MOVE' : direction } );
-        io.emit('MOVE', direction);
-    });
-    socket.on('EXIT', function (direction) {
-        console.log( { 'EXIT' : true } );
-        io.emit('EXIT', true);
+    socket.on('COMMAND', function (command) {
+        console.log( { 'COMMAND' : command } );
+        // io.emit('MOVE', direction);
     });
 });

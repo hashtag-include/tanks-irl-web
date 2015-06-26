@@ -3,6 +3,7 @@
         $el: null,
         gameList: null,
         game: null,
+        hostId : null,
 
         init: function() {
             this.$el = $('.setup');
@@ -15,6 +16,8 @@
 
             this.$el.find('.section-join .game-list').on('click', '.connect', this.onConnect.bind(this));
             this.$el.find('.section-join .game-list').on('click', '.refresh', this.onRefresh.bind(this));
+            
+            this.$el.find('.section-id-input').on('click', '.start-game', this.onStartGame.bind(this));
         },
         refreshGameList: function() {
             $.ajax({
@@ -40,6 +43,9 @@
                 alert(response.message);
             }.bind(this));
         },
+        requestToHostGame: function(playerId) {
+            
+        },
         initializeGame: function(playerId, opponentId) {
             var controller = new Controller();
             var player = new Player(playerId, controller);
@@ -55,6 +61,19 @@
         hide: function() {
             this.$el.hide();
         },
+        showIdInput: function() {
+            this.$el.find('.section-id-input').fadeIn();
+        },
+        hideInInput: function() {
+            this.$el.find('.section-id-input').fadeOut();
+        },
+        inputPlayerId: function(hostId) {
+            
+            
+            var playerIsHost = hostId == null;
+            this.requestToJoinGame(hostId, 'SSOE');
+        },
+        
 
         // Getters and Setters
         getGameList: function() {
@@ -85,14 +104,25 @@
         },
         onHost: function() {
             this.$el.find('.section-start').fadeOut();
-            this.$el.find('.section-host').fadeIn();
+            this.showIdInput();
         },
         onConnect: function(e) {
-            var hostId = $(e.target).parent().find('.hostId').text();
-            this.requestToJoinGame(hostId, 'SSOE');
+            this.hostId = $(e.target).parent().find('.hostId').text();
+            this.$el.find('.section-join').fadeOut();
+            this.showIdInput();
         },
         onRefresh: function() {
             this.refreshGameList();
+        },
+        onStartGame: function() {
+            var playerId = this.$el.find('.section-id-input .id-input').val();
+            
+            if(this.hostId) {
+                this.requestToJoinGame(this.hostId, playerId);
+            } else {
+                // Player is host
+                this.requestToHostGame(playerId);
+            }
         }
     };
 

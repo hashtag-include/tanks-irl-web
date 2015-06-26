@@ -1,25 +1,21 @@
-function Game(player, opponent) {
+function Game(player) {
     this.player = player;
-    this.opponent = opponent;
     this.socket = io(document.location.origin);
 };
 
 Game.prototype = {
     player: null,
-    opponent: null,
     socket: null,
-    MODE_TYPE: ['MOVE', 'AIM'],
     mode: null,
 
     constructor: Game,
     init: function() {
         this.player.init();
-        this.opponent.init();
 
         this.player.setFuel(100);
         this.player.setHealth(100);
 
-        this.setMode(Game.prototype.MODE_TYPE.MOVE);
+        this.setMode(Game.prototype.CONSTANTS.MODES.MOVE);
         
         this.bindEvents();
     },
@@ -34,7 +30,7 @@ Game.prototype = {
         document.addEventListener(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.SECONDARY, this.onSecondary.bind(this), false);
     },
     toggleMode: function() {
-        this.setMode(this.getMode() === this.MODE_TYPE.MOVE ? this.MODE_TYPE.AIM : this.MODE_TYPE.MOVE);
+        this.setMode(this.getMode() === Game.prototype.CONSTANTS.MODES.MOVE ? Game.prototype.CONSTANTS.MODES.AIM : Game.prototype.CONSTANTS.MODES.MOVE);
     },
     emitCommand: function(command) {
         this.socket.emit('COMMAND', { 'command': command, 'player': this.player.serialize() });
@@ -50,16 +46,16 @@ Game.prototype = {
     
     // Events
     onDpadUp: function() {
-        this.emitCommand(this.getMode() === this.MODE_TYPE.MOVE ? 'MOVE_UP' : 'TILT_UP');
+        this.emitCommand(this.getMode() === Game.prototype.CONSTANTS.MODES.MOVE ? 'MOVE_UP' : 'TILT_UP');
     },
     onDpadRight: function() {
-        this.emitCommand(this.getMode() === this.MODE_TYPE.MOVE ? 'MOVE_RIGHT' : 'PAN_RIGHT');
+        this.emitCommand(this.getMode() === Game.prototype.CONSTANTS.MODES.MOVE ? 'MOVE_RIGHT' : 'PAN_RIGHT');
     },
     onDpadDown: function() {
-        this.emitCommand(this.getMode() === this.MODE_TYPE.MOVE ? 'MOVE_DOWN' : 'TILT_DOWN');
+        this.emitCommand(this.getMode() === Game.prototype.CONSTANTS.MODES.MOVE ? 'MOVE_DOWN' : 'TILT_DOWN');
     },
     onDpadLeft: function() {
-        this.emitCommand(this.getMode() === this.MODE_TYPE.MOVE ? 'MOVE_LEFT' : 'PAN_LEFT');
+        this.emitCommand(this.getMode() === Game.prototype.CONSTANTS.MODES.MOVE ? 'MOVE_LEFT' : 'PAN_LEFT');
     },
     onSelect: function() {},
     onStart: function() {
@@ -70,5 +66,13 @@ Game.prototype = {
     },
     onSecondary: function() {
         this.toggleMode();
+    },
+    
+    // Constants
+    CONSTANTS: {
+        MODES: {
+            MOVE: 'MOVE',
+            AIM: 'AIM'
+        }
     }
 };
