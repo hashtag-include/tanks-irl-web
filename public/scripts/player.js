@@ -1,6 +1,8 @@
 function Player(id, controller) {
-    this.id = id;
     this.controller = controller;
+    this.setId(id);
+    this.setFuel(100);
+    this.setHealth(100);
 };
 
 Player.prototype = {
@@ -10,12 +12,6 @@ Player.prototype = {
     controller: null,
 
     constructor: Player,
-    init: function() {
-        if(this.controller) this.controller.init();
-
-        this.bindEvents();
-    },
-    bindEvents: function() {},
     serialize: function() {
         var serialized = {};
         serialized.id = this.getId();

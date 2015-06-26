@@ -1,5 +1,18 @@
 function Controller() {
     this.$el = $('.controller');
+
+    this.EVENT_DPAD_UP.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.UP, true, true);
+    this.EVENT_DPAD_RIGHT.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.RIGHT, true, true);
+    this.EVENT_DPAD_DOWN.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.DOWN, true, true);
+    this.EVENT_DPAD_LEFT.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.LEFT, true, true);
+    this.EVENT_BUTTON_SELECT.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.SELECT, true, true);
+    this.EVENT_BUTTON_START.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.START, true, true);
+    this.EVENT_BUTTON_PRIMARY.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.PRIMARY, true, true);
+    this.EVENT_BUTTON_SECONDARY.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.SECONDARY, true, true);
+    
+    this.show();
+    
+    this.bindEvents();
 };
 
 Controller.prototype = {
@@ -16,20 +29,6 @@ Controller.prototype = {
     EVENT_BUTTON_SECONDARY: document.createEvent('Event'),
 
     constructor: Controller,
-    init: function() {
-        this.show();
-
-        this.EVENT_DPAD_UP.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.UP, true, true);
-        this.EVENT_DPAD_RIGHT.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.RIGHT, true, true);
-        this.EVENT_DPAD_DOWN.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.DOWN, true, true);
-        this.EVENT_DPAD_LEFT.initEvent(Controller.prototype.CONSTANTS.EVENTS.DPAD.LEFT, true, true);
-        this.EVENT_BUTTON_SELECT.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.SELECT, true, true);
-        this.EVENT_BUTTON_START.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.START, true, true);
-        this.EVENT_BUTTON_PRIMARY.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.PRIMARY, true, true);
-        this.EVENT_BUTTON_SECONDARY.initEvent(Controller.prototype.CONSTANTS.EVENTS.BUTTONS.SECONDARY, true, true);
-
-        this.bindEvents();
-    },
     bindEvents: function() {
         this.$el.find('.section-left .dpad').on('touchstart mousedown MSPointerDown', '.up', this.onDpadUp.bind(this));
         this.$el.find('.section-left .dpad').on('touchstart mousedown MSPointerDown', '.right', this.onDpadRight.bind(this));

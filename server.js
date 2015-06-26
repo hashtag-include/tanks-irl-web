@@ -16,21 +16,9 @@ app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
-function generateGameList() {
-    gameList.sessions = [];
-    gameList.unmatched = [];
-    
-    gameList.sessions.push({ host: { id: 'VEFD', fuel: 100, health: 100 }, opponent: null });
-    gameList.sessions.push({ host: { id: '1TA0', fuel: 100, health: 100 }, opponent: null });
-    gameList.sessions.push({ host: { id: 'XWUP', fuel: 45, health: 70 }, opponent: { id: 'BKUL', fuel: 100, health: 20 } });
+app.get('/reset', function (req, res) {
+    gameList = { sessions: [], unmatched: [] };
 
-    gameList.unmatched.push('X02R', '1TA0', 'SSOE', 'WENV', 'KY8A');
-}
-
-generateGameList();
-app.get('/generate', function (req, res) {
-    generateGameList();
-    
     res.status(200).send(gameList);
 });
 
@@ -38,6 +26,11 @@ app.get('/game', function (req, res) {
     res.status(200).send(gameList);
 });
 
+/**
+ * We could remove all this logic and instead do it over websockets,
+ * but I didn't want to create a ws connection for each user until they're
+ * validated as legitimate (ie, valid unmatched tank requested)
+ */
 app.post('/game', function (req, res) {
     var response = { message: null, gameList: gameList };
     
@@ -69,18 +62,77 @@ app.post('/game', function (req, res) {
             }
         }
     } else if(req.body.action == 'HOST') {
-        
+        if(gameList.unmatched.indexOf(req.body.hostId) !== -1) {
+            gameList.sessions.push({ host: { id: req.body.hostId, fuel: 100, health: 100 }, opponent: null });
+            gameList.unmatched.splice(gameList.unmatched.indexOf(req.body.hostId), 1);
+
+            response.message = 'OK';
+            response.gameList = gameList;
+            res.status(200).send(response);
+            return;
+        } else {
+            response.message = 'Error: Tank not connected or already connected to another session';
+            res.status(409).send(response);
+            return;
+        }
     }
     
     response.message = 'Error: Host has disconnected';
     res.status(409).send(response);
 });
 
-io.on('connection', function (socket) {
-    console.log('[Connection Established]');
+function removeTankFromGameList(socket) {
+    if(gameList.unmatched.indexOf(socket.clientId) === -1) {
+        for(var i = 0; i < gameList.sessions.length; i++) {
+            if(gameList.sessions[i].host && gameList.sessions[i].host.id) {
+                if(gameList.sessions[i].host.id == socket.clientId) {
+                    if(gameList.sessions[i].opponent && gameList.sessions[i].opponent.id) {
+                        gameList.unmatched.push(gameList.sessions[i].opponent.id);
+                    }
+                    gameList.sessions.splice(i, 1);
+                    return;
+                }
+            }
 
-    socket.on('COMMAND', function (command) {
-        console.log( { 'COMMAND' : command } );
-        // io.emit('MOVE', direction);
+            if(gameList.sessions[i].opponent && gameList.sessions[i].opponent.id) {
+                if(gameList.sessions[i].opponent.id == socket.clientId) {
+                    if(gameList.sessions[i].host && gameList.sessions[i].host.id) {
+                        gameList.unmatched.push(gameList.sessions[i].host.id);
+                    }
+                    gameList.sessions.splice(i, 1);
+                    return;
+                }
+            }
+        }
+    } else {
+        gameList.unmatched.splice(gameList.unmatched.indexOf(socket.clientId), 1);
+    }
+}
+
+io.on('connection', function (socket) {
+    console.log('[Connection Opened]');
+    io.emit('update', gameList);
+
+    socket.on('disconnect', function() {
+        removeTankFromGameList(socket);
+        io.emit('client-disconnect', { 'id': socket.clientId, 'type': socket.clientType });
+    });
+
+    socket.on('client-connect', function(clientInfo) {
+        socket.clientType = clientInfo.type;
+        socket.clientId = clientInfo.id;
+        console.log('Client Type: ' + socket.clientType +'   |   Client ID: ' + socket.clientId);
+
+        if(socket.clientType == 'tank') {
+            removeTankFromGameList(socket);
+            gameList.unmatched.push(socket.clientId);
+        }
+
+        io.emit('update', gameList);
+    });
+
+    socket.on('command', function (command) {
+        console.log( { 'command' : command } );
+        io.emit('command', command);
     });
 });

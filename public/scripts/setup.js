@@ -1,15 +1,17 @@
 (function() {
-    var Setup = {
+    var Setup = function() {
+        this.$el = $('.setup');
+
+        this.bindEvents();
+    };
+    
+    Setup.prototype = {
         $el: null,
         gameList: null,
         game: null,
-        hostId : null,
+        hostId: null,
 
-        init: function() {
-            this.$el = $('.setup');
-
-            this.bindEvents();
-        },
+        constructor: Setup,
         bindEvents: function() {
             this.$el.find('.section-start').on('click', '.join', this.onJoin.bind(this));
             this.$el.find('.section-start').on('click', '.host', this.onHost.bind(this));
@@ -36,7 +38,7 @@
                 data: { action: 'JOIN', hostId: hostId, playerId: playerId }
             }).done(function(response) {
                 this.setGameList(response.gameList);
-                this.initializeGame(playerId, hostId);
+                this.joinGame(playerId, hostId);
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
@@ -44,16 +46,34 @@
             }.bind(this));
         },
         requestToHostGame: function(playerId) {
-            
+            $.ajax({
+                url: '/game',
+                method: 'POST',
+                dataType: 'json',
+                data: { action: 'HOST', hostId: playerId }
+            }).done(function(response) {
+                this.setGameList(response.gameList);
+                this.hostGame(playerId);
+            }.bind(this)).fail(function(response) {
+                response = JSON.parse(response.responseText);
+                this.setGameList(response.gameList);
+                alert(response.message);
+            }.bind(this));
         },
-        initializeGame: function(playerId, opponentId) {
+        joinGame: function(playerId, opponentId) {
+            this.hide();
+            
             var controller = new Controller();
             var player = new Player(playerId, controller);
             var opponent = new Player(opponentId, null);
             this.game = new Game(player, opponent);
-            
+        },
+        hostGame: function(playerId) {
             this.hide();
-            this.game.init();
+            
+            var controller = new Controller();
+            var player = new Player(playerId, controller);
+            this.game = new Game(player, null);
         },
         show: function() {
             this.$el.show();
@@ -66,12 +86,6 @@
         },
         hideInInput: function() {
             this.$el.find('.section-id-input').fadeOut();
-        },
-        inputPlayerId: function(hostId) {
-            
-            
-            var playerIsHost = hostId == null;
-            this.requestToJoinGame(hostId, 'SSOE');
         },
         
 
@@ -126,5 +140,5 @@
         }
     };
 
-    Setup.init();
+    new Setup();
 })();
