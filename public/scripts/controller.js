@@ -18,7 +18,7 @@ function Controller() {
 Controller.prototype = {
     $el: null,
     mousedownTimeout: null,
-    mousedownInterval: 200,
+    mousedownInterval: 150,
     EVENT_DPAD_UP: document.createEvent('Event'),
     EVENT_DPAD_RIGHT: document.createEvent('Event'),
     EVENT_DPAD_DOWN: document.createEvent('Event'),
