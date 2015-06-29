@@ -1,6 +1,7 @@
 (function() {
     var Setup = function() {
         this.$el = $('.setup');
+        this.modal = new Modal();
 
         this.bindEvents();
     };
@@ -9,6 +10,7 @@
         $el: null,
         gameList: null,
         game: null,
+        modal: null,
         hostId: null,
 
         constructor: Setup,
@@ -42,7 +44,7 @@
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
-                alert(response.message);
+                this.modal.show(response.message, 'OK');
             }.bind(this));
         },
         requestToHostGame: function(playerId) {
@@ -57,7 +59,7 @@
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
-                alert(response.message);
+                this.modal.show(response.message, 'OK');
             }.bind(this));
         },
         joinGame: function(playerId, opponentId) {
@@ -66,14 +68,14 @@
             var controller = new Controller();
             var player = new Player(playerId, controller);
             var opponent = new Player(opponentId, null);
-            this.game = new Game(player, opponent);
+            this.game = new Game(player, opponent, this.modal);
         },
         hostGame: function(playerId) {
             this.hide();
             
             var controller = new Controller();
             var player = new Player(playerId, controller);
-            this.game = new Game(player, null);
+            this.game = new Game(player, null, this.modal);
         },
         show: function() {
             this.$el.show();

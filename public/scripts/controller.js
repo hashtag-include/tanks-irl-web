@@ -47,7 +47,7 @@ Controller.prototype = {
     hide: function() {
         this.$el.hide();
     },
-    
+
     // Getters and Setters
     setFuelBarWidth: function(percent) {
         if(percent < 0 || percent > 100) throw "Error: Fuel percentage out of bounds (must be 0-100)";
@@ -59,7 +59,7 @@ Controller.prototype = {
 
         this.$el.find('.health .bar').width(percent + '%');
     },
-    
+
     // Events
     onDpadUp: function() {
         if(typeof(this.mousedownTimeout) !== 'undefined') clearInterval(this.mousedownTimeout);

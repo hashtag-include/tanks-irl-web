@@ -1,8 +1,9 @@
-function Game(player, opponent) {
+function Game(player, opponent, modal) {
     this.setPlayer(player);
-    this.setOpponent(opponent);
-    this.socket = io(document.location.origin);
+    if(opponent) this.setOpponent(opponent);
+    this.modal = modal;
     
+    this.socket = io(document.location.origin);
     this.socket.emit('client-connect', { 'id': this.getPlayer().getId(), 'type': 'controller' });
     
     this.setMode(Game.prototype.CONSTANTS.MODES.MOVE);
@@ -14,6 +15,7 @@ Game.prototype = {
     opponent: null,
     socket: null,
     mode: null,
+    modal: null,
 
     constructor: Game,
     bindEvents: function() {
@@ -97,10 +99,12 @@ Game.prototype = {
     onClientDisconnect: function(data) {
         console.log(data);
         if(data.id == this.player.getId()) {
-            alert('Your ' + data.type + ' was disconnected');
+            this.modal.show('Your ' + data.type + ' was disconnected', 'Main Menu', this.onModalClose);
         } else if(data.id == this.opponent.getId()) {
-            alert('Opponent ' + data.type + ' was disconnected');
+            this.modal.show('Your ' + data.type + ' was disconnected', 'Main Menu', this.onModalClose);
         }
+    },
+    onModalClose: function() {
         window.location.reload();
     },
     
