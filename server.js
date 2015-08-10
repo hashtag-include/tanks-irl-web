@@ -2,8 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server, { pingTimeout: 60000});
 
+io.set('close timeout', 60);
+io.set('heartbeat timeout', 60);
 server.listen(process.env.PORT || 1337);
 
 app.use(bodyParser.json()); 
