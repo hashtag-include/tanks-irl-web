@@ -44,7 +44,7 @@
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
-                this.modal.show(response.message, 'OK');
+                this.modal.show('Oops!', response.message, 'OK');
             }.bind(this));
         },
         requestToHostGame: function(playerId) {
@@ -59,7 +59,7 @@
             }.bind(this)).fail(function(response) {
                 response = JSON.parse(response.responseText);
                 this.setGameList(response.gameList);
-                this.modal.show(response.message, 'OK');
+                this.modal.show('Oops!', response.message, 'OK');
             }.bind(this));
         },
         joinGame: function(playerId, opponentId) {

@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static('public'));
 
-var gameList = { sessions: [], unmatched: [] };
+var gameList = { sessions: [], unmatched: ["5208", "9102", "2138"] };
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
@@ -48,14 +48,14 @@ app.post('/game', function (req, res) {
                         res.status(200).send(response);
                         return;
                     } else {
-                        response.message = 'Error: Tank not connected or already connected to another session';
+                        response.message = 'Tank not connected or already connected to another session';
                         res.status(409).send(response);
                         return;
                     }
                     
                     gameList.sessions[i].opponent = { id: req.body.playerId};
                 } else {
-                    response.message = 'Error: Requested session has been filled';
+                    response.message = 'Requested session has been filled';
                     res.status(409).send(response);
                     return;
                 }
@@ -71,13 +71,13 @@ app.post('/game', function (req, res) {
             res.status(200).send(response);
             return;
         } else {
-            response.message = 'Error: Tank not connected or already connected to another session';
+            response.message = 'Tank not connected or already connected to another session';
             res.status(409).send(response);
             return;
         }
     }
     
-    response.message = 'Error: Host has disconnected';
+    response.message = 'Host has disconnected';
     res.status(409).send(response);
 });
 

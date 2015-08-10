@@ -496,8 +496,12 @@ body {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 
-  color: #FFDF02;
+  color: #FFF;
   background: #3E4249;
+}
+
+.remodal h1 {
+  color: #FFDF02;
 }
 
 .remodal.remodal-is-opening,
@@ -526,7 +530,7 @@ body {
 
 /* Dialog buttons */
 
-.remodal-confirm {
+.remodal-cancel, .remodal-confirm {
   font: inherit;
 
   display: inline-block;
@@ -547,13 +551,20 @@ body {
   outline: 0;
 }
 
+.remodal-cancel {
+  color: #FFF;
+  background: #e57373;
+}
 .remodal-confirm {
-  color: #3E4249;
-  background: #FFDF02;
+  color: #FFF;
+  background: #81C784;
 }
 
+.remodal-cancel:hover {
+  background: #EF5350;
+}
 .remodal-confirm:hover {
-  background: #FFEB5F;
+  background: #66BB6A;
 }
 
 /* Remove inner padding and border in Firefox 4+ for the button tag. */
