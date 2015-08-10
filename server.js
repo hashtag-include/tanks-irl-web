@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static('public'));
 
-var gameList = { sessions: [], unmatched: ["5208", "9102", "2138"] };
+var gameList = { sessions: [], unmatched: [] };
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
