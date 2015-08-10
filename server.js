@@ -10,14 +10,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static('public'));
 
-var gameList = { sessions: [], unmatched: [] };
+var gameList = { sessions: [], unmatched: ["fak1", "fak2"] };
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
 app.get('/reset', function (req, res) {
-    gameList = { sessions: [], unmatched: [] };
+    gameList = { sessions: [], unmatched: ["fak1", "fak2"] };
 
     res.status(200).send(gameList);
 });
